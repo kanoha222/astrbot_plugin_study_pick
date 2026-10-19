@@ -4,6 +4,7 @@ from __future__ import annotations
 import asyncio
 import time
 from collections import OrderedDict
+from urllib.parse import urlsplit
 
 from astrbot.api import AstrBotConfig, logger
 from astrbot.api.event import AstrMessageEvent, filter
@@ -11,6 +12,17 @@ from astrbot.api.star import Context, Star
 
 from .core import DataError, choose_record, filter_records, format_record, http_url, parse_html
 from .source import fetch_html
+
+
+def display_image_url(url: str) -> str:
+    """Split display text only; removing the first ' + ' restores the exact URL."""
+    parts = urlsplit(url)
+    authority_start = url.index("://") + 3
+    offset = parts.netloc.find(".")
+    if offset < 0 or ":" in (parts.hostname or ""):
+        offset = 0
+    position = authority_start + offset
+    return url[:position] + " + " + url[position:]
 
 
 class StudyPickPlugin(Star):
@@ -74,6 +86,8 @@ class StudyPickPlugin(Star):
             if len(self._previous) > 512:
                 self._previous.popitem(last=False)
             text = format_record(record)
+            # Only the final image address is split; source data and requests stay intact.
+            text = text.removesuffix(record.cover_url) + display_image_url(record.cover_url)
             yield event.plain_result(text)
         except DataError as exc:
             yield event.plain_result(f"学习失败：{exc}")
