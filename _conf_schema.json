@@ -1,0 +1,34 @@
+{
+  "source_url": {
+    "type": "string",
+    "description": "HTML 数据页面地址（必填）",
+    "hint": "所有记录均从此地址的 HTTP 响应读取。只接受不含账号密码的 HTTP(S) 地址；未填写或请求失败时直接报错，不提供内置记录。",
+    "default": ""
+  },
+  "scope": {
+    "type": "string",
+    "description": "分类筛选",
+    "hint": "all 表示全部，其他值与响应记录的 scope 精确匹配。筛选在本地进行，不添加 URL 参数。",
+    "default": "all"
+  },
+  "year": {
+    "type": "int",
+    "description": "年份筛选（0 表示全部）",
+    "default": 0
+  },
+  "avoid_repeat": {
+    "type": "bool",
+    "description": "同会话避免连续重复（仅一个候选时允许重复）",
+    "default": true
+  },
+  "timeout_seconds": {
+    "type": "int",
+    "description": "HTTP 总超时秒数（1—60）",
+    "default": 15
+  },
+  "cache_ttl_seconds": {
+    "type": "int",
+    "description": "响应缓存秒数（0—3600；默认 0，每次发起请求）",
+    "default": 0
+  }
+}
