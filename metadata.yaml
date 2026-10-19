@@ -1,7 +1,7 @@
 name: astrbot_plugin_study_pick
 display_name: 随机学习
 desc: 从配置的 HTML 页面响应读取记录，随机返回介绍和图片链接，不内置内容数据。
-version: "0.2.0"
+version: "0.2.1"
 author: kanoha222
 repo: https://github.com/kanoha222/astrbot_plugin_study_pick
 astrbot_version: ">=4.28.0,<5"
